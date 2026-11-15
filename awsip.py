@@ -28,6 +28,14 @@ def find_aws_ip(aws_ip_range_data, ip_to_find):
         result.append(prefix)
   return result
 
-  #return [prefix for prefix in aws_ip_range_data if ipaddress.ip_address(ip_to_find) in ipaddress.ip_network(prefix['ip_prefix'])]
+#def smallest_subnet(ips):
+if __name__ == "__main__":
+  if len(sys.argv) < 2:
+    sys.stderr.write("Il manque des arguments : python awsip.py <ip>  |  python awsip.py --subnet <ip1> <ip2> ...\n")
+    sys.exit(1)
 
-sys.stdout.write(json.dumps(find_aws_ip(download_aws_ip_set(), sys.argv[1]),indent=2))
+  if sys.argv[1] == "--subnet":
+    subnet = smallest_subnet(sys.argv[2:])  
+    sys.stdout.write(str(subnet) + "\n")
+  else:
+    sys.stdout.write(json.dumps(find_aws_ip(download_aws_ip_set(), sys.argv[1]), indent=2))
